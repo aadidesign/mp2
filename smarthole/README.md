@@ -295,7 +295,27 @@ python main.py --mode train
 python main.py --mode predict --input data/raw/raw_data.csv --model "Extra Trees"
 ```
 
-### 5. Use custom config
+### 5. Batch inference from `custom_data/` (new)
+Place one or many CSV files in `custom_data/`, then run:
+
+```bash
+python main.py --mode predict --model "Extra Trees"
+```
+
+This processes all CSV files in `custom_data/`.
+
+### 6. Predict only selected files from `custom_data/` (new)
+```bash
+python main.py --mode predict --model "Extra Trees" --files file1.csv file2.csv
+```
+
+You can also point to a different folder:
+
+```bash
+python main.py --mode predict --input-dir "path/to/my_csvs" --files a.csv b.csv --model "Extra Trees"
+```
+
+### 7. Use custom config
 ```bash
 python main.py --mode train --config custom_config.yaml
 ```
@@ -330,6 +350,7 @@ python main.py --mode train --config custom_config.yaml
 - `outputs/label_distribution.png`
 - `outputs/signal_per_class.png`
 - `outputs/labeling_metadata.txt`
+- `outputs/predictions/*_window_predictions.csv` (new: per-window labels + probabilities + indices/timestamps)
 
 ---
 

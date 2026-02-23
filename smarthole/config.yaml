@@ -52,3 +52,5 @@ models:
 paths:
   model_dir: "models"
   output_dir: "outputs"
+  custom_data_dir: "custom_data"
+  predictions_dir: "outputs/predictions"

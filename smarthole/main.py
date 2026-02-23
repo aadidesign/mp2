@@ -9,7 +9,7 @@ from pathlib import Path
 
 import numpy as np
 
-from src.predict import predict_from_csv
+from src.predict import predict_from_csv, predict_from_folder
 from train import run_training_pipeline
 
 np.random.seed(42)
@@ -47,6 +47,16 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--mode", choices=["train", "predict"], required=True)
     parser.add_argument("--config", default="config.yaml", help="Path to config YAML")
     parser.add_argument("--input", type=str, help="Input CSV path for predict mode")
+    parser.add_argument(
+        "--input-dir",
+        type=str,
+        help="Folder containing input CSV files for batch predict mode (default: custom_data from config)",
+    )
+    parser.add_argument(
+        "--files",
+        nargs="*",
+        help="Specific CSV filenames inside --input-dir/custom_data to process (space-separated)",
+    )
     parser.add_argument("--model", type=str, default="Extra Trees", help="Model name for predict mode")
     return parser.parse_args()
 
@@ -61,13 +71,19 @@ def main() -> None:
     if args.mode == "train":
         run_training_pipeline(config_path)
     else:
-        if not args.input:
-            raise ValueError("--input is required in predict mode")
-        predict_from_csv(
-            input_csv=Path(args.input).resolve(),
-            model_name=args.model,
-            config_path=config_path,
-        )
+        if args.input:
+            predict_from_csv(
+                input_csv=Path(args.input).resolve(),
+                model_name=args.model,
+                config_path=config_path,
+            )
+        else:
+            predict_from_folder(
+                config_path=config_path,
+                model_name=args.model,
+                input_dir=Path(args.input_dir).resolve() if args.input_dir else None,
+                selected_files=args.files,
+            )
 
 
 if __name__ == "__main__":

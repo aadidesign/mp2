@@ -160,3 +160,6 @@ label
 2026-02-24 02:34:26,547 | INFO | train | [7/7] Evaluating on held-out test set...
 2026-02-24 02:34:45,575 | INFO | src.evaluate | Saved leaderboard to D:\MP2\smarthole\outputs\results_leaderboard.csv
 2026-02-24 02:34:45,575 | INFO | train | Saved labeling metadata to D:\MP2\smarthole\outputs\labeling_metadata.txt
+2026-02-24 03:08:52,465 | INFO | src.feature_engineering | Extracted 87 windows from input
+2026-02-24 03:08:52,465 | INFO | src.feature_engineering | Created feature matrix with shape (87, 15)
+2026-02-24 03:08:52,839 | INFO | src.predict | Saved per-window tags to D:\MP2\smarthole\outputs\predictions\raw_data_window_predictions.csv
