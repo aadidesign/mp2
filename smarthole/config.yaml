@@ -1,0 +1,54 @@
+data:
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+  window_size: 50
+  stride: 25
+  test_size: 0.20
+  val_size: 0.15
+  random_state: 42
+
+labeling:
+  method: "unsupervised_kmeans"
+  n_clusters: 3
+  severity_feature: "std_val"
+  n_init: 30
+
+labels:
+  0: "Smooth"
+  1: "Mild Pothole"
+  2: "Severe Pothole"
+
+features:
+  window_features:
+    - mean
+    - std_val
+    - rms
+    - p2p
+    - kurtosis
+    - skew
+    - energy
+    - iqr
+    - abs_mean
+    - median
+    - zcr
+    - crest_factor
+    - variance
+    - max_abs
+    - min_abs
+
+models:
+  rf_n_estimators: 300
+  rf_max_depth: null
+  svm_c: 10
+  svm_gamma: "scale"
+  knn_k: 7
+  dt_max_depth: 15
+  lr_c: 1.0
+  gb_n_estimators: 200
+  gb_learning_rate: 0.1
+  gb_max_depth: 5
+  cv_splits: 5
+
+paths:
+  model_dir: "models"
+  output_dir: "outputs"

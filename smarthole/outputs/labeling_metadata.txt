@@ -1,0 +1,1 @@
+{'method': 'unsupervised_kmeans', 'severity_feature': 'std_val', 'cluster_to_label': {2: 0, 1: 1, 0: 2}, 'labeling_scaler': StandardScaler(), 'model': KMeans(max_iter=500, n_clusters=3, n_init=30, random_state=42)}

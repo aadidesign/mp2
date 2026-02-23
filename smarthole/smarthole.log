@@ -1,0 +1,162 @@
+2026-02-24 02:31:59,888 | INFO | train | [1/7] Loading sensor data...
+2026-02-24 02:31:59,983 | INFO | src.data_loader | Raw data summary by file:
+        source_file  rows  az_mean   az_std  az_min  az_max
+ Dataset_Smooth.csv  3212 0.998459 0.497271  -2.000     2.0
+ raw_data_plain.csv  1157 0.998157 0.589414  -1.412     2.0
+ Database_rough.csv  3991 0.887351 0.774967  -2.000     2.0
+ Dataset_rough2.csv  1925 0.886539 0.760855  -2.000     2.0
+Database_rough3.csv  1176 0.987858 0.517929  -1.868     2.0
+ Dataset_rough4.csv   584 0.918478 0.723550  -2.000     2.0
+       raw_data.csv  2223 0.986728 0.621364  -1.629     2.0
+raw_data_pav_1_.csv  4756 0.839330 0.933576  -2.000     2.0
+2026-02-24 02:31:59,983 | INFO | src.data_loader | Total rows loaded: 19024
+2026-02-24 02:31:59,991 | INFO | train | [2/7] Extracting features (window=50, stride=25)...
+2026-02-24 02:32:00,283 | INFO | src.feature_engineering | Extracted 127 windows from Dataset_Smooth.csv
+2026-02-24 02:32:00,373 | INFO | src.feature_engineering | Extracted 45 windows from raw_data_plain.csv
+2026-02-24 02:32:00,756 | INFO | src.feature_engineering | Extracted 158 windows from Database_rough.csv
+2026-02-24 02:32:00,936 | INFO | src.feature_engineering | Extracted 76 windows from Dataset_rough2.csv
+2026-02-24 02:32:01,040 | INFO | src.feature_engineering | Extracted 46 windows from Database_rough3.csv
+2026-02-24 02:32:01,088 | INFO | src.feature_engineering | Extracted 22 windows from Dataset_rough4.csv
+2026-02-24 02:32:01,290 | INFO | src.feature_engineering | Extracted 87 windows from raw_data.csv
+2026-02-24 02:32:01,754 | INFO | src.feature_engineering | Extracted 189 windows from raw_data_pav_1_.csv
+2026-02-24 02:32:01,754 | INFO | src.feature_engineering | Created feature matrix with shape (750, 15)
+2026-02-24 02:32:01,754 | INFO | train | [3/7] Assigning severity labels using algorithm: 'unsupervised_kmeans'
+2026-02-24 02:32:01,754 | INFO | train |       (No filename-based assumptions - purely data-driven)
+2026-02-24 02:32:02,831 | INFO | src.labeling | Saved KMeans labeling artifact to D:\MP2\smarthole\models\kmeans_labeling_artifact.pkl
+2026-02-24 02:32:02,831 | INFO | src.labeling | ================================================
+2026-02-24 02:32:02,831 | INFO | src.labeling | LABEL ASSIGNMENT: unsupervised_kmeans
+2026-02-24 02:32:02,831 | INFO | src.labeling | ================================================
+2026-02-24 02:32:02,831 | INFO | src.labeling | Label 0 - Smooth        :   59 windows (  7.9%)
+2026-02-24 02:32:02,831 | INFO | src.labeling | Label 1 - Mild Pothole  :  490 windows ( 65.3%)
+2026-02-24 02:32:02,831 | INFO | src.labeling | Label 2 - Severe Pothole:  201 windows ( 26.8%)
+2026-02-24 02:32:02,831 | INFO | src.labeling | ================================================
+2026-02-24 02:32:02,876 | INFO | train | Saved labeled feature windows to D:\MP2\smarthole\data\processed\labeled_windows.csv
+2026-02-24 02:32:02,928 | INFO | train | Label cross-tab by source file:
+label                 0    1    2
+source_file                      
+Database_rough.csv   12   93   53
+Database_rough3.csv   2   43    1
+Dataset_Smooth.csv   18  108    1
+Dataset_rough2.csv    8   46   22
+Dataset_rough4.csv    2   16    4
+raw_data.csv          0   87    0
+raw_data_pav_1_.csv  15   57  117
+raw_data_plain.csv    2   40    3
+2026-02-24 02:32:02,928 | INFO | train | Mean std_val per discovered label:
+label
+0    0.025630
+1    0.589909
+2    1.026336
+2026-02-24 02:32:04,910 | INFO | train | Saved labeling method comparison to D:\MP2\smarthole\outputs\labeling_method_comparison.csv
+2026-02-24 02:32:04,910 | INFO | train | [4/7] Splitting data (test=0.20, val=0.15)...
+2026-02-24 02:32:04,921 | INFO | src.preprocessing | Saved supervised feature scaler to D:\MP2\smarthole\models\feature_scaler.pkl
+2026-02-24 02:32:04,921 | INFO | src.preprocessing | Train distribution: class 0: 38 (7.8%), class 1: 318 (65.3%), class 2: 131 (26.9%)
+2026-02-24 02:32:04,921 | INFO | src.preprocessing | Val distribution: class 0: 9 (8.0%), class 1: 74 (65.5%), class 2: 30 (26.5%)
+2026-02-24 02:32:04,922 | INFO | src.preprocessing | Test distribution: class 0: 12 (8.0%), class 1: 98 (65.3%), class 2: 40 (26.7%)
+2026-02-24 02:32:04,922 | INFO | train | [5/7] Training all models...
+2026-02-24 02:32:06,027 | INFO | src.model | Random Forest trained in 0.979s | val_acc=1.0000
+2026-02-24 02:32:06,279 | INFO | src.model | Saved model Random Forest -> D:\MP2\smarthole\models\Random_Forest.pkl
+2026-02-24 02:32:07,103 | INFO | src.model | Extra Trees trained in 0.731s | val_acc=1.0000
+2026-02-24 02:32:07,282 | INFO | src.model | Saved model Extra Trees -> D:\MP2\smarthole\models\Extra_Trees.pkl
+2026-02-24 02:32:10,723 | INFO | src.model | Gradient Boosting trained in 3.438s | val_acc=1.0000
+2026-02-24 02:32:10,762 | INFO | src.model | Saved model Gradient Boosting -> D:\MP2\smarthole\models\Gradient_Boosting.pkl
+2026-02-24 02:32:10,785 | INFO | src.model | SVM (RBF) trained in 0.025s | val_acc=0.9912
+2026-02-24 02:32:10,793 | INFO | src.model | Saved model SVM (RBF) -> D:\MP2\smarthole\models\SVM_RBF.pkl
+2026-02-24 02:32:10,861 | INFO | src.model | KNN trained in 0.002s | val_acc=0.9912
+2026-02-24 02:32:10,865 | INFO | src.model | Saved model KNN -> D:\MP2\smarthole\models\KNN.pkl
+2026-02-24 02:32:10,876 | INFO | src.model | Decision Tree trained in 0.008s | val_acc=0.9912
+2026-02-24 02:32:10,876 | INFO | src.model | Saved model Decision Tree -> D:\MP2\smarthole\models\Decision_Tree.pkl
+2026-02-24 02:32:10,910 | INFO | src.model | Logistic Regression trained in 0.031s | val_acc=1.0000
+2026-02-24 02:32:10,915 | INFO | src.model | Saved model Logistic Regression -> D:\MP2\smarthole\models\Logistic_Regression.pkl
+2026-02-24 02:32:10,918 | INFO | src.model | Naive Bayes trained in 0.003s | val_acc=0.8938
+2026-02-24 02:32:10,922 | INFO | src.model | Saved model Naive Bayes -> D:\MP2\smarthole\models\Naive_Bayes.pkl
+2026-02-24 02:32:10,924 | INFO | train | [6/7] Running 5-fold cross-validation on best 3 models...
+2026-02-24 02:32:16,968 | INFO | src.model | Random Forest CV weighted-F1: 0.9832 +/- 0.0159
+2026-02-24 02:32:20,739 | INFO | src.model | Extra Trees CV weighted-F1: 0.9917 +/- 0.0078
+2026-02-24 02:32:27,117 | INFO | src.model | Gradient Boosting CV weighted-F1: 0.9669 +/- 0.0120
+2026-02-24 02:32:27,121 | INFO | train | Saved cross-validation summary to D:\MP2\smarthole\outputs\cross_validation_top3.csv
+2026-02-24 02:32:27,121 | INFO | train | [7/7] Evaluating on held-out test set...
+2026-02-24 02:32:47,392 | INFO | src.evaluate | Saved leaderboard to D:\MP2\smarthole\outputs\results_leaderboard.csv
+2026-02-24 02:32:47,413 | INFO | train | Saved labeling metadata to D:\MP2\smarthole\outputs\labeling_metadata.txt
+2026-02-24 02:33:02,013 | INFO | src.feature_engineering | Extracted 87 windows from input
+2026-02-24 02:33:02,013 | INFO | src.feature_engineering | Created feature matrix with shape (87, 15)
+2026-02-24 02:33:59,966 | INFO | train | [1/7] Loading sensor data...
+2026-02-24 02:34:00,051 | INFO | src.data_loader | Raw data summary by file:
+        source_file  rows  az_mean   az_std  az_min  az_max
+ Dataset_Smooth.csv  3212 0.998459 0.497271  -2.000     2.0
+ raw_data_plain.csv  1157 0.998157 0.589414  -1.412     2.0
+ Database_rough.csv  3991 0.887351 0.774967  -2.000     2.0
+ Dataset_rough2.csv  1925 0.886539 0.760855  -2.000     2.0
+Database_rough3.csv  1176 0.987858 0.517929  -1.868     2.0
+ Dataset_rough4.csv   584 0.918478 0.723550  -2.000     2.0
+       raw_data.csv  2223 0.986728 0.621364  -1.629     2.0
+raw_data_pav_1_.csv  4756 0.839330 0.933576  -2.000     2.0
+2026-02-24 02:34:00,055 | INFO | src.data_loader | Total rows loaded: 19024
+2026-02-24 02:34:00,055 | INFO | train | [2/7] Extracting features (window=50, stride=25)...
+2026-02-24 02:34:00,337 | INFO | src.feature_engineering | Extracted 127 windows from Dataset_Smooth.csv
+2026-02-24 02:34:00,441 | INFO | src.feature_engineering | Extracted 45 windows from raw_data_plain.csv
+2026-02-24 02:34:00,777 | INFO | src.feature_engineering | Extracted 158 windows from Database_rough.csv
+2026-02-24 02:34:00,958 | INFO | src.feature_engineering | Extracted 76 windows from Dataset_rough2.csv
+2026-02-24 02:34:01,057 | INFO | src.feature_engineering | Extracted 46 windows from Database_rough3.csv
+2026-02-24 02:34:01,097 | INFO | src.feature_engineering | Extracted 22 windows from Dataset_rough4.csv
+2026-02-24 02:34:01,336 | INFO | src.feature_engineering | Extracted 87 windows from raw_data.csv
+2026-02-24 02:34:01,774 | INFO | src.feature_engineering | Extracted 189 windows from raw_data_pav_1_.csv
+2026-02-24 02:34:01,774 | INFO | src.feature_engineering | Created feature matrix with shape (750, 15)
+2026-02-24 02:34:01,774 | INFO | train | [3/7] Assigning severity labels using algorithm: 'unsupervised_kmeans'
+2026-02-24 02:34:01,777 | INFO | train |       (No filename-based assumptions - purely data-driven)
+2026-02-24 02:34:02,682 | INFO | src.labeling | Saved KMeans labeling artifact to D:\MP2\smarthole\models\kmeans_labeling_artifact.pkl
+2026-02-24 02:34:02,682 | INFO | src.labeling | ================================================
+2026-02-24 02:34:02,682 | INFO | src.labeling | LABEL ASSIGNMENT: unsupervised_kmeans
+2026-02-24 02:34:02,682 | INFO | src.labeling | ================================================
+2026-02-24 02:34:02,682 | INFO | src.labeling | Label 0 - Smooth        :   59 windows (  7.9%)
+2026-02-24 02:34:02,682 | INFO | src.labeling | Label 1 - Mild Pothole  :  490 windows ( 65.3%)
+2026-02-24 02:34:02,682 | INFO | src.labeling | Label 2 - Severe Pothole:  201 windows ( 26.8%)
+2026-02-24 02:34:02,682 | INFO | src.labeling | ================================================
+2026-02-24 02:34:02,714 | INFO | train | Saved labeled feature windows to D:\MP2\smarthole\data\processed\labeled_windows.csv
+2026-02-24 02:34:02,739 | INFO | train | Label cross-tab by source file:
+label                 0    1    2
+source_file                      
+Database_rough.csv   12   93   53
+Database_rough3.csv   2   43    1
+Dataset_Smooth.csv   18  108    1
+Dataset_rough2.csv    8   46   22
+Dataset_rough4.csv    2   16    4
+raw_data.csv          0   87    0
+raw_data_pav_1_.csv  15   57  117
+raw_data_plain.csv    2   40    3
+2026-02-24 02:34:02,739 | INFO | train | Mean std_val per discovered label:
+label
+0    0.025630
+1    0.589909
+2    1.026336
+2026-02-24 02:34:04,658 | INFO | train | Saved labeling method comparison to D:\MP2\smarthole\outputs\labeling_method_comparison.csv
+2026-02-24 02:34:04,658 | INFO | train | [4/7] Splitting data (test=0.20, val=0.15)...
+2026-02-24 02:34:04,672 | INFO | src.preprocessing | Saved supervised feature scaler to D:\MP2\smarthole\models\feature_scaler.pkl
+2026-02-24 02:34:04,673 | INFO | src.preprocessing | Train distribution: class 0: 38 (7.8%), class 1: 318 (65.3%), class 2: 131 (26.9%)
+2026-02-24 02:34:04,673 | INFO | src.preprocessing | Val distribution: class 0: 9 (8.0%), class 1: 74 (65.5%), class 2: 30 (26.5%)
+2026-02-24 02:34:04,673 | INFO | src.preprocessing | Test distribution: class 0: 12 (8.0%), class 1: 98 (65.3%), class 2: 40 (26.7%)
+2026-02-24 02:34:04,674 | INFO | train | [5/7] Training all models...
+2026-02-24 02:34:05,728 | INFO | src.model | Random Forest trained in 0.935s | val_acc=1.0000
+2026-02-24 02:34:05,964 | INFO | src.model | Saved model Random Forest -> D:\MP2\smarthole\models\Random_Forest.pkl
+2026-02-24 02:34:06,799 | INFO | src.model | Extra Trees trained in 0.733s | val_acc=1.0000
+2026-02-24 02:34:06,949 | INFO | src.model | Saved model Extra Trees -> D:\MP2\smarthole\models\Extra_Trees.pkl
+2026-02-24 02:34:10,242 | INFO | src.model | Gradient Boosting trained in 3.289s | val_acc=1.0000
+2026-02-24 02:34:10,303 | INFO | src.model | Saved model Gradient Boosting -> D:\MP2\smarthole\models\Gradient_Boosting.pkl
+2026-02-24 02:34:10,340 | INFO | src.model | SVM (RBF) trained in 0.032s | val_acc=0.9912
+2026-02-24 02:34:10,347 | INFO | src.model | Saved model SVM (RBF) -> D:\MP2\smarthole\models\SVM_RBF.pkl
+2026-02-24 02:34:10,413 | INFO | src.model | KNN trained in 0.004s | val_acc=0.9912
+2026-02-24 02:34:10,419 | INFO | src.model | Saved model KNN -> D:\MP2\smarthole\models\KNN.pkl
+2026-02-24 02:34:10,428 | INFO | src.model | Decision Tree trained in 0.008s | val_acc=0.9912
+2026-02-24 02:34:10,428 | INFO | src.model | Saved model Decision Tree -> D:\MP2\smarthole\models\Decision_Tree.pkl
+2026-02-24 02:34:10,457 | INFO | src.model | Logistic Regression trained in 0.025s | val_acc=1.0000
+2026-02-24 02:34:10,457 | INFO | src.model | Saved model Logistic Regression -> D:\MP2\smarthole\models\Logistic_Regression.pkl
+2026-02-24 02:34:10,464 | INFO | src.model | Naive Bayes trained in 0.002s | val_acc=0.8938
+2026-02-24 02:34:10,465 | INFO | src.model | Saved model Naive Bayes -> D:\MP2\smarthole\models\Naive_Bayes.pkl
+2026-02-24 02:34:10,465 | INFO | train | [6/7] Running 5-fold cross-validation on best 3 models...
+2026-02-24 02:34:16,351 | INFO | src.model | Random Forest CV weighted-F1: 0.9832 +/- 0.0159
+2026-02-24 02:34:20,453 | INFO | src.model | Extra Trees CV weighted-F1: 0.9917 +/- 0.0078
+2026-02-24 02:34:26,543 | INFO | src.model | Gradient Boosting CV weighted-F1: 0.9669 +/- 0.0120
+2026-02-24 02:34:26,547 | INFO | train | Saved cross-validation summary to D:\MP2\smarthole\outputs\cross_validation_top3.csv
+2026-02-24 02:34:26,547 | INFO | train | [7/7] Evaluating on held-out test set...
+2026-02-24 02:34:45,575 | INFO | src.evaluate | Saved leaderboard to D:\MP2\smarthole\outputs\results_leaderboard.csv
+2026-02-24 02:34:45,575 | INFO | train | Saved labeling metadata to D:\MP2\smarthole\outputs\labeling_metadata.txt
